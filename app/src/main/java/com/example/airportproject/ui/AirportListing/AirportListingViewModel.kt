@@ -29,7 +29,7 @@ class AirportListingViewModel @Inject constructor(
         fetchProducts()
     }
 
-    private fun fetchProducts(){
+    public fun fetchProducts(){
         airportList.postValue(Resource.Loading())
 
         viewModelScope.launch {

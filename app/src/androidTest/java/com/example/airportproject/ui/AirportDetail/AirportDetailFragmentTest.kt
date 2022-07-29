@@ -1,32 +1,28 @@
-package com.example.airportproject
+package com.example.airportproject.ui.AirportDetail
 
 import android.os.Bundle
+import androidx.fragment.app.FragmentFactory
 import androidx.fragment.app.testing.launchFragmentInContainer
-import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.Espresso
+import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import com.example.airportproject.R
 import com.example.airportproject.data.model.*
-import com.example.airportproject.ui.AirportListing.AirportListingFragment
-import dagger.hilt.android.testing.HiltAndroidRule
-import dagger.hilt.android.testing.HiltAndroidTest
-import org.junit.Rule
+import junit.framework.TestCase
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Test
-
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 
-@HiltAndroidTest
 @RunWith(RobolectricTestRunner::class)
-class AirportListingFragmentTest {
+class AirportDetailFragmentTest {
 
     @Test
-    fun test_isAirportsListVisible() {
+    fun test_isAirportDetailVisible() {
 
-        var airportList : MutableList<ApiResponse> = mutableListOf()
-
+        // GIVEN
         var region = Region("AU", "Australia")
         var country = Country("AU", "Australia")
         var state = State("QLD", "Queensland")
@@ -34,23 +30,18 @@ class AirportListingFragmentTest {
         var location = Location(-99999, 26.45, -0.4669, 141.00, 2.4609, "S", "E")
 
         var apiResponse = ApiResponse("AAB", false, false, false,
-        false, false, location, "Arrabury",
-        city, state, country, region)
+            false, false, location, "Arrabury", city, state, country, region)
 
+        val fragmentFactory = FragmentFactory()
         val bundle = Bundle()
         bundle.putParcelable("AIRPORT", apiResponse)
-
-        repeat(5){
-            airportList.add(apiResponse)
-        }
-
-        val scenario = launchFragmentInContainer<AirportListingFragment>(
-            bundle
+        val scenario = launchFragmentInContainer<AirportDetailFragment>(
+            fragmentArgs = bundle,
+            factory = fragmentFactory
         )
 
         // VERIFY
-        // VERIFY
-        onView(withId(R.id.recycler_view))
-            .check(matches(withText(airportList.toString())))
+        Espresso.onView(withId(R.id.region))
+            .check(ViewAssertions.matches(withText(apiResponse.region?.regionName)))
     }
 }

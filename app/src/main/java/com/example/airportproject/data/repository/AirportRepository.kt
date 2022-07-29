@@ -9,10 +9,10 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class AirportRepository@Inject constructor(
+open class AirportRepository@Inject constructor(
     private val airportAppService: AirportAppService) {
 
-    suspend fun fetchData(): Response<ArrayList<ApiResponse>> = withContext(
+    open suspend fun fetchData(): Response<ArrayList<ApiResponse>> = withContext(
         Dispatchers.IO) {
          airportAppService.getAllAirportsData()
     }

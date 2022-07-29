@@ -18,5 +18,9 @@
         android:id="@+id/airportDetailFragment"
         android:name="com.example.airportproject.ui.AirportDetail.AirportDetailFragment"
         android:label="AirportDetailFragment"
-        tools:layout="@layout/fr_airport_detail"/>
+        tools:layout="@layout/fr_airport_detail">
+        <action
+            android:id="@+id/action_airportDetailFragment_to_airportListingFragment"
+            app:destination="@id/airportListingFragment" />
+    </fragment>
 </navigation>
